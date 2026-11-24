@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The 10-Slide POV Deck Kit · SE Engineer Shorts</title>
-<meta name="description" content="For software and SaaS SEs: your POV deck needs just 10 slides to show value to your customer. Build the kickoff deck from your account research, then turn it into the results readout.">
+<meta name="description" content="Your POV deck needs just 10 slides to show value to your customer, and a readout built from your real results. Build the kickoff deck from your account research, then turn it into the results readout.">
 <meta property="og:title" content="The 10-Slide POV Deck Kit">
 <meta property="og:description" content="Your POV deck needs just 10 slides to show value to your customer.">
 <meta property="og:image" content="assets/pov/slide-06.jpg">
@@ -36,7 +36,9 @@ a{color:var(--teal-d)}
 section{padding:64px 0}
 h2{font:600 32px/1.2 var(--display);margin-bottom:10px;text-wrap:balance}
 .lede{color:var(--muted);max-width:44em;margin-bottom:30px}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:s}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:s}
+.real{color:var(--teal-d)}.hero .real{color:var(--mark)}
+.who{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.who span{border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:14px;font-weight:600;background:#fff}
 .step{border:1px solid var(--line);border-radius:8px;padding:24px;counter-increment:s}
 .step::before{content:counter(s,decimal-leading-zero);display:block;font:700 28px var(--display);color:var(--teal);margin-bottom:6px}
 .step h3{font:600 19px var(--display);margin-bottom:6px}.step p{color:var(--muted);font-size:15px}
@@ -56,6 +58,7 @@ h2{font:600 32px/1.2 var(--display);margin-bottom:10px;text-wrap:balance}
 .buy{background:var(--hero);color:#fff;border-radius:12px;padding:44px;text-align:center}
 .buy h2{color:#fff}.buy p{color:rgba(255,255,255,.75);margin:6px auto 24px;max-width:36em}
 footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:13px}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
 @media (max-width:760px){.steps,.gal,.ten{grid-template-columns:1fr}}
 </style>
 </head>
@@ -68,28 +71,32 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 <div class="hero"><div class="wrap">
   <div class="kicker">The 10-Slide POV Deck Kit</div>
   <h1>Your POV deck needs just 10 slides to show value to your customer.</h1>
-  <p>Turn your account research into a kickoff deck in about 20 minutes. When the POV ends, the same deck becomes your results readout. Built for software, SaaS and cloud SEs. Works with any AI, and downloads as a real PowerPoint.</p>
+  <p>Build the kickoff deck from your account research in about 20 minutes. When the POV ends, the same deck becomes a readout built from your <b class="real">real results</b>: the wins you logged and your customer confirmed. Works with any AI, and downloads as real PowerPoint.</p>
   <div class="price"><a class="btn" href="https://fraasch.gumroad.com/l/pov-deck-kithtml" data-gumroad-overlay-checkout="true">Get the kit</a><b>$49</b><span>One-time. Instant download.</span></div>
   <img class="shot" src="assets/pov/slide-06.jpg" alt="Example results slide: four numbers against their targets and a before-and-after chart">
 </div></div>
 
 <section><div class="wrap">
-  <h2>Most POV decks are 40 slides of product. Your buyer needs ten slides about their environment.</h2>
-  <p class="lede">A POV is won or lost on two meetings: the kickoff, where you agree on what success means, and the readout, where you prove it. This kit gives you one deck for both meetings, built around the customer's numbers.</p>
+  <h2>Most POV decks are 40 slides about the product. Your buyer needs ten slides about their world, and proof.</h2>
+  <p class="lede">A POV is won or lost in two meetings: the kickoff, where you agree on what success means, and the readout, where you prove it with real results. This kit gives you one deck for both meetings.</p>
   <div class="steps">
     <div class="step"><h3>Research the account</h3><p>Use your own notes or our free Account Intelligence Builder to brief your AI on the customer.</p></div>
-    <div class="step"><h3>Fill the deck in one paste</h3><p>Copy one prompt into the same AI chat, paste the reply back, and all 10 slides fill in. Edit anything; the preview updates live.</p></div>
-    <div class="step"><h3>Flip it to the readout</h3><p>At the end, paste your results. Criteria get evidence and a pass or fail, targets get actuals, and findings and a chart appear.</p></div>
+    <div class="step"><h3>Build the kickoff deck</h3><p>Paste one prompt into your AI and paste the reply back, and all 10 slides fill in. Agree the success criteria before anything starts.</p></div>
+    <div class="step"><h3>Log your real results</h3><p>Record each win the day it happens. A weekly recap email gets your champion to confirm it in writing.</p></div>
+    <div class="step"><h3>Turn it into the readout</h3><p>Criteria get scored against confirmed evidence, targets get their actual numbers, and findings and a chart appear.</p></div>
   </div>
+  <p style="margin-top:34px;font-weight:700">Built for any Sales Engineer whose customer tests before they buy:</p>
+  <div class="who"><span>Software &amp; SaaS</span><span>Cloud &amp; infrastructure</span><span>Networking &amp; security</span><span>Data &amp; analytics</span><span>Industrial &amp; process solutions</span><span>Engineered equipment &amp; materials</span><span>Water, energy &amp; environmental</span></div>
 </div></section>
 
 <section class="mint"><div class="wrap">
-  <h2>Every claim in your readout traces to a win your customer saw.</h2>
-  <p class="lede">Readouts lose credibility when the results are pieced together at the end. This kit has you log wins as they happen and get them confirmed, so the readout only says what the POV proved.</p>
+  <div class="kicker" style="color:var(--teal-d)">Real results</div>
+  <h2>Your readout shows your <span class="real">real results</span>. Nothing invented, nothing rounded up.</h2>
+  <p class="lede">A readout loses credibility the moment a number can't be traced. Here you enter real results as the POV runs and your customer confirms them, so every claim in the readout traces to a win they saw. The AI only arranges and words what you logged, and it is told never to invent, round up or extrapolate.</p>
   <div class="inc">
-    <div><b>Wins Log</b><p>Log each win the day it happens: what you saw, the number, which success criterion it proves, who confirmed it and where the evidence lives.</p></div>
+    <div><b>Wins Log</b><p>Enter each real result the day it happens: what you saw, the measured number, which success criterion it proves, who confirmed it and where the evidence lives.</p></div>
     <div><b>Weekly recap email</b><p>One click turns the week's wins into an email to your champion. They confirm each win in writing, and they have something to forward to their boss.</p></div>
-    <div><b>Evidence check</b><p>Before you present, the builder flags any criterion marked Met without a confirmed win, any target without a result, and any unconfirmed claim.</p></div>
+    <div><b>Evidence check</b><p>Before you present, the builder flags any criterion marked Met without a confirmed result, any target without an actual number, and any claim the customer hasn't confirmed.</p></div>
     <div><b>Receipts in the speaker notes</b><p>Each results slide's notes list the dated, confirmed wins behind it. When an executive asks where a number came from, the answer is in front of you.</p></div>
   </div>
 </div></section>
@@ -100,12 +107,12 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
   <ol class="ten">
     <li><div><b>Title</b><span>The outcome, in the customer's words</span></div></li>
     <li><div><b>Why now</b><span>Three dated reasons from your research</span></div></li>
-    <li><div><b>Success criteria</b><span>Functional, integration, performance, security and adoption, agreed before install</span></div></li>
-    <li><div><b>Scope &amp; architecture</b><span>Their systems, clouds and apps, and where you plug in</span></div></li>
-    <li><div><b>Plan &amp; commitments</b><span>Security review in week 1, and what each side signs up to</span></div></li>
-    <li><div><b>By the numbers</b><span>Targets at kickoff; actuals and a chart at readout</span></div></li>
-    <li><div><b>What we found</b><span>Hypotheses at kickoff; findings at readout</span></div></li>
-    <li><div><b>Why it matters</b><span>Business reasons, each backed by POV proof</span></div></li>
+    <li><div><b>Success criteria</b><span>Agreed at kickoff; scored against real, confirmed results at readout</span></div></li>
+    <li><div><b>Scope &amp; architecture</b><span>Their sites, systems and processes, and where you fit in</span></div></li>
+    <li><div><b>Plan &amp; commitments</b><span>Reviews and approvals up front, and what each side signs up to</span></div></li>
+    <li><div><b>By the numbers</b><span>Targets at kickoff; your real results and a chart at readout</span></div></li>
+    <li><div><b>What we found</b><span>Hypotheses at kickoff; confirmed findings at readout</span></div></li>
+    <li><div><b>Why it matters</b><span>Business reasons, each backed by POV proof and an approved customer quote</span></div></li>
     <li><div><b>Path forward</b><span>Four steps from proof to production</span></div></li>
     <li><div><b>Options &amp; the ask</b><span>Two or three options, and one decision with a date</span></div></li>
   </ol>
@@ -113,7 +120,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
 <section class="mint"><div class="wrap">
   <h2>What the decks look like</h2>
-  <p class="lede">From the included example: a fictional identity SaaS company running a POV with a fictional credit union.</p>
+  <p class="lede">From the included example: a fictional software company running a POV with a fictional credit union. Your deck uses your customer, your criteria and your real results.</p>
   <div class="gal">
     <figure><img src="assets/pov/slide-01.jpg" alt="Title slide" loading="lazy"><figcaption>1 · Title</figcaption></figure>
     <figure><img src="assets/pov/slide-03.jpg" alt="Success criteria table with results" loading="lazy"><figcaption>3 · Success criteria, scored at readout</figcaption></figure>
@@ -126,7 +133,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
   <h2>What you get</h2>
   <div class="inc">
     <div><b>The POV Deck Builder</b><p>One file that runs in your browser. No install, no login, no subscription. Your customer data never leaves your machine.</p></div>
-    <div><b>Two AI prompts</b><p>One fills the kickoff deck from your brief. One builds the readout from your Wins Log and results, and is told never to invent a number. Both work in Claude, ChatGPT, Gemini and Copilot.</p></div>
+    <div><b>Two AI prompts</b><p>One fills the kickoff deck from your brief. One builds the readout from your real results and Wins Log, and is told never to invent a number. Both work in Claude, ChatGPT, Gemini and Copilot.</p></div>
     <div><b>Real PowerPoint output</b><p>Native, editable slides, tables and charts. Opens in PowerPoint, Keynote and Google Slides, in your company's colour.</p></div>
     <div><b>Example decks and a guide</b><p>A complete kickoff and readout to copy from, plus a short quick-start guide.</p></div>
   </div>
@@ -135,7 +142,8 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 <section class="mint"><div class="wrap">
   <h2>Questions</h2>
   <dl class="faq">
-    <dt>Does it work for my product?</dt><dd>It's built for technology and SaaS sales: security reviews, integrations, architecture and measurable technical outcomes. Nothing is tied to one vendor, so it fits any B2B software, cloud, security, data or infrastructure product.</dd>
+    <dt>Does it work for my product?</dt><dd>If your customer runs a trial, pilot, proof of concept or proof of value before they buy, yes. It's used for software and SaaS, and just as well for industrial, process and engineered solutions. Nothing in it is tied to a vendor or an industry. You enter what you sell, and the slides follow your customer's criteria.</dd>
+    <dt>Where do the results come from?</dt><dd>From you. You enter each real result in the Wins Log as the POV runs, and your customer confirms it. The AI only organizes and words what you entered; it is told never to invent or round up a number. The evidence check flags anything unproven before you present.</dd>
     <dt>Do I need a paid AI account?</dt><dd>No. The free tiers of the major AI assistants work. The builder itself needs no AI at all if you'd rather type.</dd>
     <dt>Is my customer's data safe?</dt><dd>The builder sends nothing anywhere. Your work is saved in your browser and in project files you control. What you paste into your AI follows your company's AI policy.</dd>
     <dt>Can I change the design?</dt><dd>Pick your accent colour in the builder. After download, every slide is ordinary, editable PowerPoint.</dd>
@@ -145,7 +153,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
 <section id="buy"><div class="wrap">
   <div class="buy">
-    <h2>Run your next POV on 10 slides.</h2>
+    <h2>Run your next POV on 10 slides. Close it with real results.</h2>
     <p>The builder, the Wins Log, both prompts, example decks and the quick-start guide. $49, one time.</p>
     <a class="btn" href="https://fraasch.gumroad.com/l/pov-deck-kithtml" data-gumroad-overlay-checkout="true">Buy now · $49</a>
     <p style="font-size:13px;margin:16px auto 0">Secure checkout by Gumroad. Sales tax handled at checkout.</p>
