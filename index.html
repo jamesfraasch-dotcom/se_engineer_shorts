@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SE Engineer Shorts — tools and 60-second lessons for Sales Engineers</title>
+<meta name="description" content="Free tools and 60-second lessons for Sales Engineers: MEDDPICC, discovery, demos and account research.">
+<meta property="og:title" content="SE Engineer Shorts">
+<meta property="og:description" content="Free tools and 60-second lessons for Sales Engineers.">
+<meta property="og:image" content="assets/avatar.jpg">
+<link rel="icon" href="assets/avatar.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --white:#FFFFFF; --mint:#E4F6F3; --ink:#1F2B2E; --muted:#667578; --line:#DCE7E5;
+  --teal:#0E9488; --teal-dark:#0A766D; --hero:#1B2528; --hero-2:#2A3A3E; --mark:#7DE3D8;
+  --display:'Outfit','Trebuchet MS',system-ui,sans-serif;
+  --body:'Mulish',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--white);color:var(--ink);font:16px/1.6 var(--body)}
+a{color:var(--teal-dark)}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.nav{border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.logo img{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid var(--teal)}
+.logo b{font:700 19px/1.1 var(--display)}
+.logo b em{font-style:normal;color:var(--teal)}
+.nav nav{display:flex;gap:20px;font-weight:600;font-size:14px}
+.nav nav a{text-decoration:none;color:var(--ink)}
+.nav nav a:hover{color:var(--teal)}
+.btn{display:inline-block;border:2px solid var(--teal);background:var(--teal);color:#fff;border-radius:4px;padding:12px 22px;font:700 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+.btn.ghost{background:transparent;border-color:rgba(255,255,255,.75)}
+.btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.hero{background:linear-gradient(135deg,var(--hero),var(--hero-2));color:#fff;padding:72px 0}
+.hero .wrap{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+.kicker{font:600 12px/1 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--mark);margin-bottom:14px}
+.hero h1{font:600 clamp(32px,4.6vw,52px)/1.1 var(--display);margin-bottom:18px;text-wrap:balance}
+.hero p{color:rgba(255,255,255,.78);max-width:52ch;font-size:18px;margin-bottom:28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero img{width:240px;height:240px;border-radius:50%;object-fit:cover;border:4px solid var(--mark)}
+section{padding:64px 0}
+h2{font:600 30px/1.2 var(--display);margin-bottom:8px}
+.lede{color:var(--muted);margin-bottom:32px;max-width:60ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.card{border:1px solid var(--line);border-radius:8px;padding:24px;background:#fff;display:flex;flex-direction:column;gap:10px}
+.card h3{font:600 20px/1.25 var(--display)}
+.card p{color:var(--muted);font-size:15px;flex:1}
+.tag{align-self:flex-start;font:700 11px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;padding:6px 8px;border-radius:3px;background:var(--mint);color:var(--teal-dark)}
+.tag.soon{background:#F1F3F3;color:var(--muted)}
+.card.soon{border-style:dashed}
+.mint{background:var(--mint)}
+.eps{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;list-style:none}
+.eps li{background:#fff;border-radius:6px;padding:14px 16px;border:1px solid var(--line);font-weight:600}
+.eps li span{display:block;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+.signup{background:var(--hero);color:#fff;border-radius:10px;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.signup p{color:rgba(255,255,255,.75)}
+.signup form{display:flex;gap:10px;flex-wrap:wrap}
+.signup input{flex:1;min-width:220px;padding:13px 14px;border-radius:4px;border:0;font:inherit}
+.signup small{display:block;margin-top:10px;color:rgba(255,255,255,.55);font-size:12px}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media (max-width:760px){
+  .hero .wrap,.signup{grid-template-columns:1fr}
+  .hero img{width:150px;height:150px;order:-1}
+  .nav nav{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="./"><img src="assets/avatar.jpg" alt=""><b>SE Engineer <em>Shorts</em></b></a>
+    <nav><a href="#tools">Tools</a><a href="#shorts">Shorts</a><a href="#signup">Get new tools</a></nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <div class="kicker">For Sales Engineers</div>
+      <h1>Win the technical deal in 60 seconds a day.</h1>
+      <p>Free tools that do the prep work for you, and short lessons on MEDDPICC, discovery and demos from an SE who still carries a number.</p>
+      <div class="cta">
+        <a class="btn" href="tools/account-intelligence-builder.html">Try the free account builder</a>
+        <a class="btn ghost" href="https://www.instagram.com/sales_eng_shorts/" rel="noopener">Watch SE Shorts</a>
+      </div>
+    </div>
+    <img src="assets/avatar.jpg" alt="SE Engineer Shorts cartoon host">
+  </div>
+</div>
+
+<section id="tools">
+  <div class="wrap">
+    <h2>Free tools</h2>
+    <p class="lede">Each tool is a single page that runs in your browser. Nothing to install, no login, and your inputs stay on your machine.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="tag">Free · Live</span>
+        <h3>Customer Account Intelligence Builder</h3>
+        <p>Fill in one sentence: what you sell and who you're selling to. It writes a research prompt for Claude, ChatGPT, Gemini or Copilot that comes back as a formatted account brief, either customer-facing or internal with a MEDDPICC scorecard.</p>
+        <a class="btn" href="tools/account-intelligence-builder.html">Open the builder</a>
+      </div>
+      <div class="card soon">
+        <span class="tag soon">Coming soon</span>
+        <h3>Discovery Question Builder</h3>
+        <p>Turns a customer's industry and your product into a MEDDPICC-mapped discovery plan you can run on the call.</p>
+      </div>
+      <div class="card soon">
+        <span class="tag soon">Coming soon</span>
+        <h3>Demo Storyboard Builder</h3>
+        <p>Plans a demo backwards from the customer's pain: the "Tell-Show-Tell" flow, the wow moment, and what to leave out.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="shorts" class="mint">
+  <div class="wrap">
+    <h2>SE Shorts</h2>
+    <p class="lede">One idea, sixty seconds. New episodes on Instagram <a href="https://www.instagram.com/sales_eng_shorts/" rel="noopener">@Sales_Eng_Shorts</a>.</p>
+    <ul class="eps">
+      <li><span>MEDDPICC</span>Metrics</li>
+      <li><span>MEDDPICC</span>Decision Criteria</li>
+      <li><span>MEDDPICC</span>Discovery Process</li>
+      <li><span>MEDDPICC</span>Paper Process</li>
+      <li><span>MEDDPICC</span>Implicate the Pain</li>
+      <li><span>MEDDPICC</span>Champion</li>
+      <li><span>Demos</span>Demo Crimes</li>
+    </ul>
+  </div>
+</section>
+
+<section id="signup">
+  <div class="wrap">
+    <div class="signup">
+      <div>
+        <h2>Get the next tool first</h2>
+        <p>One short email when a new free SE tool ships. No spam, unsubscribe any time.</p>
+      </div>
+      <div>
+        <!-- Kit form: replace KIT_FORM_ID with the number from your Kit form's embed code -->
+        <form action="https://app.kit.com/forms/KIT_FORM_ID/subscriptions" method="post">
+          <label for="email" class="sr" style="position:absolute;left:-9999px">Email</label>
+          <input id="email" name="email_address" type="email" placeholder="you@company.com" required>
+          <button class="btn" type="submit">Notify me</button>
+        </form>
+        <small>Use a personal address if your work email filters newsletters.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 SE Engineer Shorts</span>
+    <span>An independent project. Not affiliated with or endorsed by any employer or vendor.</span>
+  </div>
+</footer>
+
+</body>
+</html>

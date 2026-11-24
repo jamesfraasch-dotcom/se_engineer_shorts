@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Account Intelligence Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Mulish:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* SE Engineer Shorts. Layout idea: a clean one-page site. White nav with the avatar mark,
+   a dark hero holding the fill-in sentence, a three-step strip, then the tool on a pale mint band.
+   Single light theme by choice, to match the brand reference. */
+:root{
+  color-scheme:light;
+  --white:#FFFFFF; --mint:#E4F6F3; --mint-deep:#A9D8D2; --ink:#1F2B2E; --muted:#667578; --line:#DCE7E5;
+  --teal:#0E9488; --teal-dark:#0A766D; --hero:#1B2528; --hero-2:#2A3A3E;
+  --internal:#C2410C; --mark:#7DE3D8;
+  --display:'Outfit','Trebuchet MS',system-ui,sans-serif;
+  --body:'Mulish',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--white);color:var(--ink);font:15px/1.6 var(--body);min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* Nav */
+.nav{background:var(--white);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo img{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid var(--teal);display:block}
+.logo b{font:700 19px/1.1 var(--display);letter-spacing:-.01em;display:block}
+.logo b em{font-style:normal;color:var(--teal)}
+.logo span{font-size:12px;color:var(--muted);display:block}
+.nav-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.saved{font-size:12px;color:var(--muted);margin-right:6px}
+.btn{border:1px solid var(--line);background:var(--white);border-radius:4px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.02em}
+.btn:hover{border-color:var(--teal);color:var(--teal-dark)}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn.primary:hover{background:var(--teal-dark);border-color:var(--teal-dark);color:#fff}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--hero) 0%,var(--hero-2) 100%);color:#fff;text-align:center;padding:56px 0 60px}
+.kicker{font:600 12px/1 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--mark);margin-bottom:10px}
+.tool-name{font:600 clamp(26px,3.6vw,40px)/1.15 var(--display);letter-spacing:.01em;margin-bottom:28px;text-wrap:balance}
+.sentence{font:500 clamp(18px,2.3vw,26px)/1.9 var(--display);max-width:900px;margin:0 auto;text-wrap:balance}
+.sentence input.blank{width:auto;font:inherit;font-weight:600;border:0;border-bottom:2px solid var(--mark);border-radius:3px 3px 0 0;background:rgba(125,227,216,.14);color:#fff;padding:0 .35em;min-width:4ch;max-width:100%;text-align:center}
+.sentence input.blank::placeholder{color:#fff;opacity:.55}
+.sentence input.blank:focus-visible{outline-color:var(--mark)}
+.seg{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:22px}
+.seg button{border:2px solid rgba(255,255,255,.75);background:transparent;color:#fff;border-radius:3px;padding:11px 20px;font:700 12.5px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.seg button:hover{border-color:#fff}
+.seg button[aria-pressed="true"]{background:var(--teal);border-color:var(--teal)}
+.seg button[data-mode="internal"][aria-pressed="true"]{background:var(--internal);border-color:var(--internal)}
+.sub{margin:22px auto 0;color:rgba(255,255,255,.72);max-width:60ch;font-size:15px}
+
+/* Three steps */
+.steps3{padding:44px 0 48px;text-align:center}
+.steps3 h2,.tool h2.center{font:600 24px/1.2 var(--display);margin-bottom:6px}
+.steps3 p.lead{color:var(--muted);font-size:14px;max-width:60ch;margin:0 auto 30px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;align-items:start}
+.three div{display:grid;gap:8px;justify-items:center;align-content:start}
+.three svg{width:40px;height:40px;stroke:var(--ink);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.three b{font:600 15px var(--display)}
+.three span{font-size:13px;color:var(--muted);max-width:30ch}
+
+/* Tool band */
+.tool{background:var(--mint);padding:44px 0 96px}
+.example{display:none;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;padding:10px 14px;background:var(--white);border:1px solid var(--mint-deep);border-radius:4px;font-size:13.5px}
+.example.on{display:flex}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,500px);gap:28px;align-items:start}
+.form{display:grid;gap:14px}
+.panel{background:var(--white);border:1px solid var(--line);border-radius:6px}
+details.panel>summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:12px;padding:16px 22px}
+details.panel>summary::-webkit-details-marker{display:none}
+details.panel>summary h2{font:600 17px/1.2 var(--display)}
+details.panel>summary .note{font-size:12.5px;color:var(--muted)}
+details.panel>summary::after{content:'+';margin-left:auto;font:500 20px/1 var(--mono);color:var(--teal)}
+details.panel[open]>summary::after{content:'–'}
+.panel-body{padding:22px;display:grid;gap:18px}
+details.panel .panel-body{padding-top:4px}
+.lede{color:var(--muted);font-size:13px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:grid;gap:6px;align-content:start}
+label,.lbl{font-size:13px;font-weight:700}
+label i,.lbl i{font-style:normal;font-weight:500;color:var(--muted);margin-left:6px}
+input[type=text],select,textarea{width:100%;background:var(--white);border:1px solid var(--line);border-radius:4px;padding:10px 12px;font-size:14px}
+input[type=text]:focus,select:focus,textarea:focus{border-color:var(--teal)}
+textarea{resize:vertical;min-height:80px;line-height:1.5}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.75}
+.check{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;cursor:pointer}
+.check input{width:15px;height:15px;accent-color:var(--teal)}
+.sec-group{display:grid;gap:2px}
+.sec-group h3{font:700 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--teal-dark);padding:12px 0 6px;display:flex;gap:10px;align-items:center}
+.sec-group h3 .lock{color:var(--internal);letter-spacing:0;text-transform:none;font-weight:600}
+.sec{display:grid;grid-template-columns:20px 1fr;gap:10px;padding:8px 10px;border-radius:4px;cursor:pointer;align-items:start}
+.sec:hover{background:var(--mint)}
+.sec input{width:16px;height:16px;margin-top:3px;accent-color:var(--teal)}
+.sec b{font-weight:700;font-size:14px}
+.sec span{display:block;font-size:12.5px;color:var(--muted)}
+.sec.off{opacity:.45;cursor:not-allowed}
+.sec-tools{display:flex;gap:8px;flex-wrap:wrap}
+.sec-tools .btn{font-size:12px;padding:6px 10px}
+.swatch{display:flex;gap:8px;align-items:center}
+.swatch input[type=color]{width:44px;height:40px;border:1px solid var(--line);border-radius:4px;background:var(--white);padding:3px;cursor:pointer}
+
+/* Output */
+.out{position:sticky;top:16px;display:grid;gap:14px}
+.out-card{background:var(--hero);color:#D6E2E0;border-radius:6px;overflow:hidden;border-top:4px solid var(--teal)}
+body[data-mode="internal"] .out-card{border-top-color:var(--internal)}
+.out-head{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px 14px;flex-wrap:wrap}
+.tabs{display:inline-flex;border:1px solid #6F8083;border-radius:4px;overflow:hidden}
+.tabs button{border:0;background:transparent;color:#D6E2E0;padding:7px 14px;font:600 12px var(--body);letter-spacing:.06em;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:#D6E2E0;color:var(--hero)}
+.out-meta{padding:0 14px 10px;font-size:12px;color:#8FA1A3;display:flex;gap:6px 14px;flex-wrap:wrap;align-items:center}
+.out-meta .need{color:#FFD27A}
+.pill{font:700 10.5px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:3px;background:var(--teal);color:#fff}
+body[data-mode="internal"] .pill{background:var(--internal)}
+pre#output{margin:0;padding:14px;border-top:1px solid rgba(255,255,255,.08);font:12px/1.6 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;overflow-y:auto;max-height:max(320px,calc(100vh - 150px))}
+.how{background:var(--white);border:1px solid var(--line);border-radius:6px;padding:16px 22px}
+.how h2{font:600 15px var(--display);margin-bottom:8px}
+.how ol{padding-left:18px;display:grid;gap:6px;font-size:13.5px;color:var(--muted)}
+.how ol b{color:var(--ink)}
+
+.foot{background:var(--hero);color:rgba(255,255,255,.6);font-size:12.5px;text-align:center;padding:22px 0}
+.foot b{color:#fff;font-weight:600}
+.mobile-copy{display:none}
+@media (max-width:980px){
+  .grid{grid-template-columns:1fr}
+  .out{position:static}
+  pre#output{max-height:420px}
+  .foot{padding-bottom:80px}
+  .mobile-copy{display:flex;position:fixed;left:0;right:0;bottom:0;padding:10px 16px;background:var(--white);border-top:1px solid var(--line);gap:10px;align-items:center;justify-content:space-between;z-index:5}
+  .mobile-copy span{font-size:12px;color:var(--muted)}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .fields,.three{grid-template-columns:1fr}
+  .hero{padding:36px 0 40px}
+  .logo span{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .btn,.seg button,.tabs button{transition:background-color .12s,border-color .12s,color .12s}
+}
+</style>
+</head>
+<body data-mode="customer">
+
+<header class="nav">
+  <div class="wrap">
+    <div class="logo">
+      <img src="data:image/jpeg;base64,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" alt="SE Engineer Shorts avatar">
+      <div><b>SE Engineer <em>Shorts</em></b><span>Tools and shorts for sales engineers</span></div>
+    </div>
+    <div class="nav-actions">
+      <span class="saved" id="saved">Saved in this browser</span>
+      <button class="btn" id="new-customer" title="Keeps who you are and your options">New customer</button>
+      <button class="btn" id="clear-all">Clear everything</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">SE Engineer Shorts</p>
+    <h1 class="tool-name">Customer Account Intelligence Builder</h1>
+    <div class="sentence">
+      I'm <input class="blank" id="role" data-k="role" type="text" placeholder="what you do" aria-label="What you do">
+      at <input class="blank" id="company" data-k="company" type="text" placeholder="your company" aria-label="Your company">,
+      selling to <input class="blank" id="customer" data-k="customer" type="text" placeholder="customer name" aria-label="Customer name">.
+    </div>
+    <div class="seg" role="group" aria-label="Version">
+      <button type="button" data-mode="customer" aria-pressed="true">Customer-facing brief</button>
+      <button type="button" data-mode="internal" aria-pressed="false">Internal account brief</button>
+    </div>
+    <p class="sub">That sentence is the whole form. Copy the prompt into your AI and it does the research and builds the report.</p>
+  </div>
+</section>
+
+<section class="steps3">
+  <div class="wrap">
+    <h2>What your AI does with it</h2>
+    <p class="lead">Three passes, in this order, with sources for everything.</p>
+    <div class="three">
+      <div><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="9" width="26" height="18" rx="2"/><path d="M14 33h12M20 27v6M13 16h8M13 21h14"/></svg><b>Learns your product</b><span>Finds the top five use cases from your company's own pages and customer stories.</span></div>
+      <div><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="18" cy="18" r="10"/><path d="M26 26l8 8M14 18h8M18 14v8"/></svg><b>Researches the customer</b><span>Priorities, recent news, technology and people, each with a dated source.</span></div>
+      <div><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="15" cy="20" r="9"/><circle cx="25" cy="20" r="9"/><path d="M20 15.5v9"/></svg><b>Matches the two</b><span>Keeps only the use cases the evidence supports and builds the brief around them.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="tool">
+  <div class="wrap">
+    <div class="example" id="example">
+      <span><b>Example loaded.</b> Brightline and Harborview are made up so you can see a finished prompt.</span>
+      <button class="btn primary" id="start-own">Start with my own</button>
+    </div>
+    <main class="grid">
+      <div class="form">
+        <div class="panel">
+          <div class="panel-body">
+            <div class="field">
+              <label for="must">The value I must show this customer <i>optional</i></label>
+              <textarea id="must" data-k="must" placeholder="Leave blank and the research decides. Or name the one thing the brief has to land, e.g. 'We cut contract turnaround time.'"></textarea>
+            </div>
+            <div class="field">
+              <label for="known">Anything I already know about them <i>optional</i></label>
+              <textarea id="known" data-k="known" placeholder="Pain points, tools they use, people, timing, meeting notes. Paste anything."></textarea>
+              <label class="check"><input type="checkbox" id="known_internal"> Keep this out of a customer-facing brief</label>
+            </div>
+          </div>
+        </div>
+        <details class="panel">
+          <summary><h2>Options</h2><span class="note" id="sec-note"></span></summary>
+          <div class="panel-body">
+            <div class="fields">
+              <div class="field">
+                <label for="length">Length</label>
+                <select id="length" data-k="length">
+                  <option value="short">Short, about one page</option>
+                  <option value="standard">Standard</option>
+                  <option value="deep">Deep dive</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="format">Deliver as</label>
+                <select id="format" data-k="format">
+                  <option value="html">Designed HTML report</option>
+                  <option value="htmlpdf">Designed HTML report plus PDF</option>
+                  <option value="doc">Plain document, no styling</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="accent_hex">Report accent color</label>
+                <div class="swatch">
+                  <input type="color" id="accent_pick" aria-label="Pick accent color">
+                  <input type="text" id="accent_hex" data-k="accent" placeholder="#0E9488">
+                </div>
+              </div>
+            </div>
+            <div class="sec-tools"><button class="btn" id="sec-defaults">Reset sections to defaults</button></div>
+            <div id="sections"></div>
+          </div>
+        </details>
+      </div>
+
+      <aside class="out">
+        <div class="out-card">
+          <div class="out-head">
+            <div class="tabs" role="group" aria-label="Export format">
+              <button type="button" data-out="prompt" aria-pressed="true">Prompt</button>
+              <button type="button" data-out="json" aria-pressed="false">JSON</button>
+            </div>
+            <button class="btn primary" id="copy">Copy</button>
+          </div>
+          <div class="out-meta"><span class="pill" id="mode-pill">Customer-facing</span><span id="count"></span><span class="need" id="need"></span></div>
+          <pre id="output" tabindex="0" aria-label="Generated prompt"></pre>
+        </div>
+        <div class="how">
+          <h2>How to run it</h2>
+          <ol>
+            <li><b>Copy</b> the prompt. It updates as you type.</li>
+            <li><b>Paste</b> it into Claude, ChatGPT, Gemini or Copilot with web search turned on.</li>
+            <li><b>Check the sources</b> at the bottom of the report before it leaves your hands.</li>
+          </ol>
+        </div>
+      </aside>
+    </main>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap"><b>SE Engineer Shorts</b> · Customer Account Intelligence Builder</div></footer>
+
+<div class="mobile-copy"><span id="count-m"></span><button class="btn primary" id="copy-m">Copy prompt</button></div>
+
+<script>
+/* d = [on in customer version, on in internal version]; internal:true means internal version only */
+const SECTIONS = [
+  {g:'About the customer', id:'snapshot',   t:'Company snapshot',         h:'What they do, how they are funded, size and footprint', d:[1,1]},
+  {g:'About the customer', id:'news',       t:'Recent news and triggers', h:'Dated events and why each one matters', d:[1,1]},
+  {g:'About the customer', id:'priorities', t:'Strategic priorities',     h:'What leadership has said they are trying to do', d:[1,1]},
+  {g:'About the customer', id:'tech',       t:'Technology environment',   h:'What they run, with the evidence for each item', d:[0,1]},
+  {g:'About the customer', id:'leadership', t:'Key people',               h:'Public roles and what each has said recently', d:[0,1]},
+  {g:'Where you fit',      id:'beforeafter',t:'Today versus with your product', h:'Matched scenarios using their real systems and sites', d:[1,0]},
+  {g:'Where you fit',      id:'proof',      t:'Proof points',             h:'Published results the AI can cite, never invented', d:[1,1]},
+  {g:'Where you fit',      id:'nextsteps',  t:'Next steps',               h:'A short path forward with timeframes', d:[1,1]},
+  {g:'For your eyes only', id:'discovery',  t:'Discovery questions',      h:'Questions tied to what the research turned up', d:[0,1], internal:true},
+  {g:'For your eyes only', id:'stakeholders',t:'Stakeholder map',         h:'Who likely decides, influences, blocks and champions', d:[0,1], internal:true},
+  {g:'For your eyes only', id:'competition',t:'Competitive landscape',    h:'Incumbents, alternatives, where you win and lose', d:[0,1], internal:true},
+  {g:'For your eyes only', id:'objections', t:'Likely objections',        h:'What they will push back on and how to answer', d:[0,1], internal:true},
+  {g:'For your eyes only', id:'qualification',t:'MEDDPICC scorecard',     h:'What you know and what is missing', d:[0,1], internal:true},
+  {g:'For your eyes only', id:'talktrack',  t:'Opening talk track',       h:'A 30-second opener and a short outreach email', d:[0,0], internal:true}
+];
+const KEEP = ['role','company','mode','out','length','format','accent','sec'];
+const BLANK = {mode:'customer',out:'prompt',role:'',company:'',customer:'',must:'',known:'',known_internal:false,sec:{},length:'standard',format:'html',accent:'#0E9488',example:false};
+const EXAMPLE = Object.assign({}, BLANK, {example:true, role:'a sales engineer for contract software', company:'Brightline', customer:'Harborview Credit Union',
+  known:'Legal reviews every vendor contract by email. Their core banking vendor contract renews in Q2.'});
+
+const KEY = 'aib.v2';
+let state;
+function load(){ try{ const raw = localStorage.getItem(KEY); if(raw){ return Object.assign({}, BLANK, JSON.parse(raw)); } }catch(e){} return JSON.parse(JSON.stringify(EXAMPLE)); }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); document.getElementById('saved').textContent='Saved in this browser'; }catch(e){ document.getElementById('saved').textContent='Not saved: storage is off'; } }
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const internal = () => state.mode === 'internal';
+const mi = () => internal() ? 1 : 0;
+function secOn(s){ if(s.internal && !internal()) return false; const o = state.sec[s.id]; if(o && typeof o[mi()] === 'boolean') return o[mi()]; return !!s.d[mi()]; }
+function setSec(id, v){ const o = state.sec[id] || [null,null]; o[mi()] = v; state.sec[id] = o; }
+function accent(){ return /^#[0-9a-f]{6}$/i.test(state.accent||'') ? state.accent.toUpperCase() : '#0E9488'; }
+
+/* ---------- Report stylesheet that travels inside the prompt ---------- */
+function reportCSS(){ return [
+":root{--accent:"+accent()+";--ink:#141B2B;--muted:#5A6478;--line:#DDE2EA;--bg:#F6F7F9;--card:#FFFFFF;--good:#18794E;--warn:#B45309;--bad:#B42318}",
+"*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 'Source Sans 3',system-ui,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}",
+".wrap{max-width:1060px;margin:0 auto;padding:0 32px}",
+".internal-banner{background:var(--bad);color:#fff;text-align:center;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;padding:9px}",
+".hero{background:var(--ink);color:#fff;padding:46px 0 40px;border-top:6px solid var(--accent)}",
+".eyebrow{font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}.hero .eyebrow{color:#fff;opacity:.7}",
+".hero h1{font:700 40px/1.1 'Fraunces',Georgia,serif;margin:12px 0 8px}.tagline{font:italic 400 19px/1.4 'Fraunces',Georgia,serif;opacity:.85;max-width:720px;margin:0}",
+".chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.chip{border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:4px 12px;font-size:12px}",
+".kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:28px}.kpi{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:14px 16px}.kpi b{display:block;font:700 22px/1.1 'JetBrains Mono',monospace}.kpi span{font-size:11px;text-transform:uppercase;letter-spacing:.06em;opacity:.7}",
+"main section{margin-top:44px}h2{font:600 26px/1.2 'Fraunces',Georgia,serif;margin:8px 0 18px;padding-bottom:10px;border-bottom:2px solid var(--accent)}h3{font-size:15px;margin:4px 0 8px}",
+".summary{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:8px;padding:28px 32px}.summary .lead{font:600 24px/1.3 'Fraunces',Georgia,serif;margin:0 0 12px}",
+".cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px 22px}.card p{margin:0;font-size:13.5px;color:var(--muted)}",
+".meta{font:11px 'JetBrains Mono',monospace;color:var(--muted)}.why{margin-top:10px;padding:10px 12px;background:var(--bg);border-radius:6px;font-size:13px}",
+"table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);font-size:13.5px}th{background:var(--ink);color:#fff;text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:12px 14px}td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top}",
+".ba{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden}.ba>div{padding:24px 28px;background:var(--card)}.ba .before{background:#FBF6F4}.ba h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 14px}.before h3{color:var(--bad)}.after h3{color:var(--good)}.closing{font:italic 17px 'Fraunces',Georgia,serif;text-align:center;color:var(--muted);margin-top:16px}",
+".proof{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}.stat{font:700 38px/1 'JetBrains Mono',monospace;color:var(--accent)}.cite{font-size:11px;color:var(--muted);font-style:italic;margin-top:8px}",
+".steps{counter-reset:s;display:grid;gap:12px}.step{counter-increment:s;display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px 22px}.step::before{content:counter(s,decimal-leading-zero);font:700 26px/1 'JetBrains Mono',monospace;color:var(--accent)}.when{display:inline-block;margin-top:8px;font:600 11px 'JetBrains Mono',monospace;color:var(--accent)}",
+".tag{display:inline-block;font:600 10px/1 'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:3px 6px}.tag.confirmed{background:#E3F4EB;color:var(--good)}.tag.likely{background:#FDF0DC;color:var(--warn)}.tag.unknown{background:#FCE7E4;color:var(--bad)}",
+"footer{margin-top:52px;border-top:1px solid var(--line);padding:20px 0 56px;font-size:12px;color:var(--muted)}footer ol{padding-left:18px}",
+"@media print{.card,.step,tr,.summary{break-inside:avoid}}@media(max-width:700px){.ba{grid-template-columns:1fr}.hero h1{font-size:30px}}"
+].join('\n'); }
+const FONT_LINK = '<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">';
+
+/* ---------- Build the brief specification ---------- */
+function build(){
+  const s = state, I = internal();
+  const C = s.customer.trim() || '[CUSTOMER NAME]';
+  const S = s.company.trim() || '[YOUR COMPANY]';
+  const R = s.role.trim() || '[WHAT YOU DO]';
+  const styled = s.format !== 'doc';
+  const cls = c => styled ? ' Use ' + c + '.' : '';
+  const n = {short:[3,3,2], standard:[4,5,3], deep:[6,8,4]}[s.length] || [4,5,3];
+  const must = s.must.trim(), known = s.known.trim();
+  const knownHidden = known && s.known_internal && !I;
+
+  const HOW = {
+    snapshot: 'Company snapshot. ' + n[0] + ' to ' + (n[0]+2) + ' cards covering what ' + C + ' does, how it makes money or is funded, size and footprint, who it serves, and its recent trajectory. Every card rests on a source.' + cls('.cols of .card, each with an .eyebrow label, an h3 and a paragraph'),
+    news: 'Recent news and triggers. ' + n[1] + ' or more items from the last 6 months: leadership changes, launches, incidents, funding, acquisitions, contracts, regulatory actions. Each has the exact date, the named source, a specific headline, a one or two sentence summary, and ' + (I ? 'a "How to use this" note giving the sales angle and the use case it supports.' : 'a "Why it matters" note of 25 words or more tying it to one of the matched use cases.') + cls('.cols of .card with .meta for date and source, and .why for the note'),
+    priorities: 'Strategic priorities. The 3 to 5 goals ' + C + ' leadership has stated publicly, in their own terms, each with where and when it was said.' + cls('.cols of .card'),
+    tech: 'Technology environment. A table of what ' + C + ' runs: Area, What they use, Evidence' + (I ? ', Confidence. Tag each row Confirmed, Likely or Unknown.' : '. Include only items you can confirm from a public source.') + ' Good evidence: job postings, vendor case studies, press releases, public documentation.' + (styled && I ? ' Use .tag.confirmed, .tag.likely, .tag.unknown.' : ''),
+    leadership: 'Key people. A table: Name, Role, Public focus or recent statement' + (I ? ', Likely part in a buying decision.' : '.') + ' Public professional information only.',
+    beforeafter: 'Today versus with ' + S + '. One matched pair per matched use case, written for an executive reader and naming ' + C + '\'s real applications, sites or programs. End with one closing line.' + cls('.ba with a .before column headed "Today" and an .after column headed "With ' + S + '", then .closing'),
+    proof: 'Proof points. Up to 3 published results for the matched use cases, taken from ' + S + '\'s own pages, analyst studies or named customer stories. Each shows the figure, what it measures, one sentence on what it would mean for ' + C + ', and the citation. If you cannot cite any, leave this section out.' + cls('.proof of .card, each with .stat and .cite'),
+    nextsteps: I ? 'Next steps. 3 or 4 actions for the account team in order, each with an owner role and a timeframe.' + cls('.steps of .step with .when')
+                 : 'Next steps. 3 or 4 steps. The first is a working session or demonstration built around the strongest matched use case. Each has a timeframe.' + cls('.steps of .step with .when'),
+    discovery: 'Discovery questions. ' + (s.length==='short' ? '6' : '8 to 12') + ' questions grouped by matched use case. Each is tied to a specific finding and says what a strong answer would tell us.',
+    stakeholders: 'Stakeholder map. A table: Person or role, Likely stake in this decision, What they care about, How to approach them, Confidence. Name real people only where a public source supports it.' + (styled ? ' Use the .tag classes for confidence.' : ''),
+    competition: 'Competitive landscape. Incumbent tools, likely alternatives, and the options of building in-house or doing nothing. For each: evidence it is in play, where ' + S + ' is stronger, where it is weaker, and one trap to set or avoid.',
+    objections: 'Likely objections. 4 to 6 objections this customer is likely to raise, each with a response and the proof that backs it.',
+    qualification: 'MEDDPICC scorecard. One row per element: what we know and the source, what is missing, and the question that closes the gap.',
+    talktrack: 'Opening talk track. A 30-second opener for a first call and an outreach email under 90 words, both built on the strongest trigger and the top matched use case.'
+  };
+
+  const matchHow = 'Use case match. This is the core of the brief. A table with one row per matched use case, strongest first: Use case, What we found at ' + C + ' (with source), What ' + S + ' does about it, Outcome.' +
+    (I ? ' Add a Strength column tagged Confirmed, Likely or Unknown. Under the table, list the use cases you considered and dropped, with one line on why.' + (styled ? ' Use the .tag classes.' : '')
+       : ' Write the use case and the finding in ' + C + '\'s language. Show only matches backed by evidence.');
+
+  const sections = [];
+  sections.push({title:'Header', how:(I && styled ? 'Start with .internal-banner reading "INTERNAL - NOT FOR DISTRIBUTION". ' : '') + 'Title is ' + C + '. Above it a small line naming ' + S + ' and the product. Below it a one-sentence tagline specific to ' + C + '\'s mission, not a slogan. Then the date and 3 to 5 sourced headline facts about ' + C + ' such as headcount, sites, revenue or people served.' + cls('.hero containing .wrap, .eyebrow, h1, .tagline, .chips of .chip, and .kpis of .kpi')});
+  sections.push({title:'Summary', how:'Open with the single most important finding as one specific sentence of 20 words or more. Follow with 80 to 120 words grounded in the research' + (must ? ', making the required value the centre of it' : '') + '. Then three short blocks: ' + (I ? '"Why now", "Our strongest use case", "Biggest unknown".' : '"The situation", "Where ' + S + ' fits", "What changes".') + cls('.summary with p.lead, then .cols of three .card')});
+  const about = SECTIONS.filter(x => x.g === 'About the customer' && secOn(x));
+  about.forEach(x => sections.push({title:x.t, named:true, how:HOW[x.id]}));
+  sections.push({title:'Use case match', named:true, how:matchHow});
+  SECTIONS.filter(x => x.g !== 'About the customer' && secOn(x)).forEach(x => sections.push({title:x.t, named:true, how:HOW[x.id]}));
+  sections.push({title:'Sources', how:'A numbered list of every source used, for both ' + S + ' and ' + C + ': publisher, title, date, URL.' + (I ? ' Then a short list of what you looked for and could not find.' : '') + cls('footer inside .wrap')});
+
+  const steps = [
+    'Research the seller first. The seller is ' + R + ' at ' + S + '. From that, work out which ' + S + ' product or product line they sell. If ' + S + ' sells several and the role does not settle it, choose the best fit and say which you chose in your first line. Then read ' + S + '\'s product pages, documentation, customer stories and analyst coverage, and write down the top 5 use cases for that product: the problem each solves, who usually owns that problem, the outcome claimed, and any published proof with its source.',
+    'Research ' + C + ' next. Cover what each section below needs, with extra weight on the last 6 months. Look at their site, press releases, leadership statements, annual or budget reports, job postings and news. If the name matches more than one organization, pick the one that fits and say which.',
+    'Match the two. For each of the 5 use cases, look for evidence at ' + C + ' that the problem exists or matters: a stated priority, a recent event, a tool they run, a role they are hiring. Keep the ' + n[2] + ' or so use cases with the strongest evidence and rank them. Drop any with none. The brief is built around these matches.',
+    must ? 'The seller requires this value to be shown: "' + must + '". Make it the lead of the summary and the first row of the use case match, and find the evidence at ' + C + ' that supports it.' + (I ? ' If the research does not support it, say so plainly and suggest what would.' : ' If the evidence is thin, present it as what organizations in their position commonly face, without overstating.') : null,
+    'If you cannot search the web in this session, say so in your first line, then work from what you know and the inputs, and list what needs verifying.',
+    'Write the sections below, in order, following the rules. Then format and deliver as described under Format.'
+  ].filter(Boolean);
+
+  const rules = [
+    'Every fact about ' + C + ' and every claim about ' + S + '\'s product traces to a named, dated source or to the seller\'s inputs. If you cannot source it, leave it out.',
+    'Never invent a statistic, quote, name, customer reference or price.',
+    'Describe only what ' + S + '\'s product publicly does. Do not stretch a use case to fit.',
+    'No placeholder text and no square brackets in the output. Every sentence is specific to ' + C + '.',
+    'Use ' + C + '\'s own names for its programs, systems and teams. Avoid vendor jargon.',
+    'People: public professional information only. Nothing personal.'
+  ];
+  if(I){
+    rules.push('This is an internal working document. Be blunt about gaps, risks and weak matches.');
+    rules.push('Mark findings as Confirmed (sourced), Likely (inferred, say from what) or Unknown.');
+  } else {
+    rules.push('This goes to ' + C + '. Write to them as a well-prepared advisor would, not as a pitch.');
+    rules.push('Keep sales-internal language out: no "prospect", "target account", "upsell", "land and expand" or deal talk.');
+    if(knownHidden) rules.push('Do not reveal anything listed under "Context only".');
+    rules.push('Do not disparage or name a competitor.');
+    rules.push('Do not claim knowledge of ' + C + '\'s internal problems that you cannot source. Frame those as questions or as what organizations in their position commonly face.');
+  }
+  rules.push({short:'Keep it to a fast read of roughly one page: the minimum item counts and tight sentences.', standard:'Standard length: complete but with no filler.', deep:'Deep dive: go to the upper end of each range and add detail where the research supports it.'}[s.length]);
+
+  let format;
+  const slug = C.replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'Account';
+  if(styled){
+    format = {type: s.format === 'htmlpdf' ? 'HTML report plus PDF' : 'HTML report',
+      instructions:[
+        'Deliver one self-contained HTML file named ' + slug + (I ? '-Internal-Brief' : '-Brief') + '.html.',
+        'Put the stylesheet below in a single <style> block, unchanged. Do not add Tailwind, Bootstrap or any other framework. Add small extra rules only if a section needs them, using the same variables.',
+        'Load fonts with: ' + FONT_LINK,
+        'Structure: ' + (I ? '.internal-banner, then ' : '') + 'header.hero, then <main class="wrap"> with one <section> per section, then the footer. Each section starts with a small .eyebrow label and an h2. Tables go inside the section directly.',
+        'Light background throughout. The only dark areas are the hero and table headers.',
+        s.format === 'htmlpdf' ? 'Also export a PDF of the same page with backgrounds on and no margins. If you cannot create a PDF here, say so and deliver the HTML.' : null,
+        'If you cannot create files in this session, output the complete HTML in one code block.'
+      ].filter(Boolean),
+      stylesheet: reportCSS()};
+  } else {
+    format = {type:'Plain document', instructions:['Deliver a clean document: one title, a heading per section, tables where a section calls for one, short paragraphs.','No HTML and no styling.']};
+  }
+
+  const inputs = {};
+  inputs['Seller'] = R + ' at ' + S;
+  inputs['Customer'] = C;
+  if(must) inputs['Value that must be shown'] = must;
+  if(known) inputs[knownHidden ? 'Context only (let it guide research and matching, never reveal it)' : 'What the seller already knows about ' + C + ' (use it)'] = known;
+
+  return {
+    title: (I ? 'Internal account brief: ' : 'Customer-facing brief: ') + C,
+    task: 'You are a research analyst working for ' + R + ' at ' + S + '. Produce ' + (I ? 'an internal account brief the sales team will use to plan their approach to ' + C + '.' : 'a brief that will be handed to ' + C + ', showing we understand their situation and where ' + S + ' fits.') + ' You do the research on both sides: first what ' + S + ' sells and its top use cases, then ' + C + ', then the match between them. Read this whole prompt before you start.',
+    steps, inputs, sections, rules, format
+  };
+}
+
+function toPrompt(b){
+  const out = ['# ' + b.title, '', b.task, '', '## Inputs'];
+  Object.keys(b.inputs).forEach(k => out.push(k + ': ' + b.inputs[k]));
+  out.push('', '## How to work');
+  b.steps.forEach((x,i) => out.push((i+1) + '. ' + x));
+  out.push('', '## Sections, in this order');
+  b.sections.forEach((x,i) => out.push((i+1) + '. ' + (x.named ? '' : x.title + '. ') + x.how));
+  out.push('', '## Rules');
+  b.rules.forEach(x => out.push('- ' + x));
+  out.push('', '## Format: ' + b.format.type);
+  b.format.instructions.forEach(x => out.push('- ' + x));
+  if(b.format.stylesheet) out.push('', 'Stylesheet:', '```css', b.format.stylesheet, '```');
+  return out.join('\n');
+}
+function toJSON(b){ return JSON.stringify({instruction:'This JSON is a complete work order. Follow task, then steps, using inputs. Write the sections in order, obey every rule, and deliver in the given format.', title:b.title, task:b.task, inputs:b.inputs, steps:b.steps, sections:b.sections.map(x=>({section:x.title, instructions:x.how})), rules:b.rules, format:b.format}, null, 2); }
+
+/* ---------- Rendering ---------- */
+let currentText = '';
+function renderOut(){
+  const b = build();
+  currentText = state.out === 'json' ? toJSON(b) : toPrompt(b);
+  $('output').textContent = currentText;
+  const c = b.sections.length + ' sections · ' + currentText.trim().split(/\s+/).length.toLocaleString() + ' words';
+  $('count').textContent = c; $('count-m').textContent = c;
+  const need = []; if(!state.role.trim()) need.push('what you do'); if(!state.company.trim()) need.push('your company'); if(!state.customer.trim()) need.push('a customer name');
+  $('need').textContent = need.length ? 'Add ' + need.join(', ') : '';
+  $('mode-pill').textContent = internal() ? 'Internal only' : 'Customer-facing';
+  $('sec-note').textContent = 'length, format, ' + (SECTIONS.filter(secOn).length + 4) + ' sections';
+}
+function fit(el){
+  const cs = getComputedStyle(el), c = fit.c || (fit.c = document.createElement('canvas').getContext('2d'));
+  c.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+  el.style.width = Math.ceil(c.measureText(el.value || el.placeholder).width + parseFloat(cs.fontSize) * 0.95) + 'px';
+}
+function fitAll(){ document.querySelectorAll('.blank').forEach(fit); }
+
+function renderSections(){
+  const box = $('sections'); box.innerHTML = '';
+  const fixed = document.createElement('p'); fixed.className = 'lede'; fixed.textContent = 'Always included: header, summary, use case match, sources.'; box.appendChild(fixed);
+  let group = null, wrap = null;
+  SECTIONS.forEach(s => {
+    const locked = s.internal && !internal();
+    if(s.g !== group){ group = s.g; wrap = document.createElement('div'); wrap.className = 'sec-group';
+      wrap.innerHTML = '<h3>' + esc(s.g) + (locked ? '<span class="lock">internal brief only</span>' : '') + '</h3>'; box.appendChild(wrap); }
+    const row = document.createElement('label'); row.className = 'sec' + (locked ? ' off' : ''); row.htmlFor = 'sec-' + s.id;
+    row.innerHTML = '<input type="checkbox" id="sec-' + s.id + '"' + (secOn(s) ? ' checked' : '') + (locked ? ' disabled' : '') + '><div><b>' + esc(s.t) + '</b><span>' + esc(s.h) + '</span></div>';
+    row.querySelector('input').addEventListener('change', e => { setSec(s.id, e.target.checked); changed(); });
+    wrap.appendChild(row);
+  });
+}
+function setMode(m){
+  state.mode = m; document.body.dataset.mode = m;
+  document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === m));
+  renderSections();
+}
+function fillInputs(){
+  document.querySelectorAll('[data-k]').forEach(el => { el.value = state[el.dataset.k] ?? ''; if(el.classList.contains('blank')) fit(el); });
+  $('known_internal').checked = !!state.known_internal;
+  $('accent_pick').value = accent();
+  document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.out === state.out));
+  $('example').classList.toggle('on', !!state.example);
+}
+function renderAll(){ fillInputs(); setMode(state.mode); renderOut(); }
+function changed(){ save(); renderOut(); }
+
+/* ---------- Events ---------- */
+document.querySelectorAll('[data-k]').forEach(el => el.addEventListener('input', () => {
+  state[el.dataset.k] = el.value; if(el.classList.contains('blank')) fit(el);
+  if(el.dataset.k === 'accent') $('accent_pick').value = accent();
+  changed();
+}));
+$('known_internal').addEventListener('change', e => { state.known_internal = e.target.checked; changed(); });
+$('accent_pick').addEventListener('input', e => { state.accent = e.target.value.toUpperCase(); $('accent_hex').value = state.accent; changed(); });
+document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => { setMode(b.dataset.mode); changed(); }));
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => { state.out = b.dataset.out; fillInputs(); changed(); }));
+$('sec-defaults').addEventListener('click', () => { state.sec = {}; renderSections(); changed(); });
+
+function reset(keep){
+  const fresh = JSON.parse(JSON.stringify(BLANK));
+  if(keep) KEEP.forEach(k => fresh[k] = state[k]);
+  state = fresh; renderAll(); save();
+  (state.role ? $('customer') : $('role')).focus();
+}
+$('new-customer').addEventListener('click', () => reset(!state.example));
+$('clear-all').addEventListener('click', () => reset(false));
+$('start-own').addEventListener('click', () => reset(false));
+
+function copy(btn){
+  const done = ok => { const t = btn.textContent; btn.textContent = ok ? 'Copied' : 'Select and copy below'; setTimeout(() => btn.textContent = t, 1800); };
+  const fallback = () => { const r = document.createRange(); r.selectNodeContents($('output')); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); let ok = false; try{ ok = document.execCommand('copy'); }catch(e){} done(ok); };
+  try{ navigator.clipboard.writeText(currentText).then(() => done(true), fallback); }catch(e){ fallback(); }
+}
+$('copy').addEventListener('click', e => copy(e.currentTarget));
+$('copy-m').addEventListener('click', e => copy(e.currentTarget));
+
+state = load();
+renderAll();
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
+window.addEventListener('resize', fitAll);
+</script>
+</body>
+</html>
