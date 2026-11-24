@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 10-Slide POV Deck Kit · SE Engineer Shorts</title>
+<meta name="description" content="Your POV deck needs just 10 slides to show value to your customer. Build the kickoff deck from your account research, then turn it into the results readout.">
+<meta property="og:title" content="The 10-Slide POV Deck Kit">
+<meta property="og:description" content="Your POV deck needs just 10 slides to show value to your customer.">
+<meta property="og:image" content="assets/pov/slide-06.jpg">
+<link rel="icon" href="assets/avatar.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--mint:#E4F6F3;--ink:#1F2B2E;--muted:#667578;--line:#DCE7E5;--teal:#0E9488;--teal-d:#0A766D;--hero:#1B2528;--hero-2:#2A3A3E;--mark:#7DE3D8;
+  --display:'Outfit','Trebuchet MS',system-ui,sans-serif;--body:'Mulish',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:16px/1.6 var(--body);color:var(--ink)}
+a{color:var(--teal-d)}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.nav{border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.logo img{width:42px;height:42px;border-radius:50%;border:2px solid var(--teal)}
+.logo b{font:700 18px var(--display)}.logo b em{font-style:normal;color:var(--teal)}
+.btn{display:inline-block;background:var(--teal);color:#fff;border:2px solid var(--teal);border-radius:4px;padding:14px 26px;font:700 14px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+.btn:hover{background:var(--teal-d);border-color:var(--teal-d)}
+.btn.ghost{background:transparent;border-color:rgba(255,255,255,.7)}
+.hero{background:linear-gradient(135deg,var(--hero),var(--hero-2));color:#fff;padding:70px 0 0;overflow:hidden}
+.kicker{font:600 12px/1 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--mark);margin-bottom:14px}
+.hero h1{font:600 clamp(32px,4.8vw,54px)/1.08 var(--display);max-width:15em;text-wrap:balance}
+.hero p{color:rgba(255,255,255,.8);font-size:19px;max-width:40em;margin:18px 0 28px}
+.price{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.price b{font:700 34px var(--display)} .price span{color:rgba(255,255,255,.7);font-size:14px}
+.shot{margin-top:46px;border-radius:10px 10px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.35);display:block;width:100%}
+section{padding:64px 0}
+h2{font:600 32px/1.2 var(--display);margin-bottom:10px;text-wrap:balance}
+.lede{color:var(--muted);max-width:44em;margin-bottom:30px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:s}
+.step{border:1px solid var(--line);border-radius:8px;padding:24px;counter-increment:s}
+.step::before{content:counter(s,decimal-leading-zero);display:block;font:700 28px var(--display);color:var(--teal);margin-bottom:6px}
+.step h3{font:600 19px var(--display);margin-bottom:6px}.step p{color:var(--muted);font-size:15px}
+.mint{background:var(--mint)}
+.ten{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 28px;list-style:none;counter-reset:t}
+.ten li{counter-increment:t;display:flex;gap:14px;padding:12px 0;border-bottom:1px solid rgba(14,148,136,.2)}
+.ten li::before{content:counter(t);font:700 20px var(--display);color:var(--teal);width:26px;flex:none}
+.ten b{display:block}.ten span{color:var(--muted);font-size:14.5px}
+.gal{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.gal figure{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.gal img{display:block;width:100%}
+.gal figcaption{padding:10px 14px;font-size:14px;color:var(--muted)}
+.inc{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.inc div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px}
+.inc b{display:block;font:600 17px var(--display);margin-bottom:4px}.inc p{color:var(--muted);font-size:14.5px}
+.faq dt{font-weight:700;margin-top:18px}.faq dd{color:var(--muted);margin-top:4px;max-width:46em}
+.buy{background:var(--hero);color:#fff;border-radius:12px;padding:44px;text-align:center}
+.buy h2{color:#fff}.buy p{color:rgba(255,255,255,.75);margin:6px auto 24px;max-width:36em}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:13px}
+@media (max-width:760px){.steps,.gal,.ten{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="./"><img src="assets/avatar.jpg" alt=""><b>SE Engineer <em>Shorts</em></b></a>
+  <a href="#buy" style="font-weight:700;text-decoration:none">Get the kit · $49</a>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div class="kicker">The 10-Slide POV Deck Kit</div>
+  <h1>Your POV deck needs just 10 slides to show value to your customer.</h1>
+  <p>Turn your account research into a kickoff deck in about 20 minutes. When the POV ends, the same deck becomes your results readout. Works for any product, with any AI, and downloads as a real PowerPoint.</p>
+  <div class="price"><a class="btn" href="#buy">Get the kit</a><b>$49</b><span>One-time. Instant download.</span></div>
+  <img class="shot" src="assets/pov/slide-06.jpg" alt="Example results slide: four numbers against their targets and a before-and-after chart">
+</div></div>
+
+<section><div class="wrap">
+  <h2>Most POV decks are 40 slides of product. The customer needs ten slides about them.</h2>
+  <p class="lede">A POV is won or lost on two meetings: the kickoff, where you agree on what success means, and the readout, where you prove it. This kit gives you one deck for both meetings, built around the customer's numbers.</p>
+  <div class="steps">
+    <div class="step"><h3>Research the account</h3><p>Use your own notes or our free Account Intelligence Builder to brief your AI on the customer.</p></div>
+    <div class="step"><h3>Fill the deck in one paste</h3><p>Copy one prompt into the same AI chat, paste the reply back, and all 10 slides fill in. Edit anything; the preview updates live.</p></div>
+    <div class="step"><h3>Flip it to the readout</h3><p>At the end, paste your results. Criteria get evidence and a pass or fail, targets get actuals, and findings and a chart appear.</p></div>
+  </div>
+</div></section>
+
+<section class="mint"><div class="wrap">
+  <h2>The 10 slides</h2>
+  <p class="lede">Each slide has one job. Each has a kickoff version and a readout version.</p>
+  <ol class="ten">
+    <li><div><b>Title</b><span>The outcome, in the customer's words</span></div></li>
+    <li><div><b>Why now</b><span>Three dated reasons from your research</span></div></li>
+    <li><div><b>Success criteria</b><span>Measurable, owned, agreed before anything is installed</span></div></li>
+    <li><div><b>Scope &amp; architecture</b><span>What you'll test, and where it sits in their world</span></div></li>
+    <li><div><b>Plan &amp; commitments</b><span>Phases, and what each side signs up to</span></div></li>
+    <li><div><b>By the numbers</b><span>Targets at kickoff; actuals and a chart at readout</span></div></li>
+    <li><div><b>What we found</b><span>Hypotheses at kickoff; findings at readout</span></div></li>
+    <li><div><b>Why it matters</b><span>Business reasons, each backed by POV proof</span></div></li>
+    <li><div><b>Path forward</b><span>Four steps from proof to production</span></div></li>
+    <li><div><b>Options &amp; the ask</b><span>Two or three options, and one decision with a date</span></div></li>
+  </ol>
+</div></section>
+
+<section><div class="wrap">
+  <h2>What the decks look like</h2>
+  <p class="lede">From the included example: a fictional software company running a POV with a fictional credit union.</p>
+  <div class="gal">
+    <figure><img src="assets/pov/slide-01.jpg" alt="Title slide" loading="lazy"><figcaption>1 · Title</figcaption></figure>
+    <figure><img src="assets/pov/slide-03.jpg" alt="Success criteria table with results" loading="lazy"><figcaption>3 · Success criteria, scored at readout</figcaption></figure>
+    <figure><img src="assets/pov/slide-07.jpg" alt="Findings table with status" loading="lazy"><figcaption>7 · What we found</figcaption></figure>
+    <figure><img src="assets/pov/slide-10.jpg" alt="Options and the ask" loading="lazy"><figcaption>10 · Options and the ask</figcaption></figure>
+  </div>
+</div></section>
+
+<section class="mint"><div class="wrap">
+  <h2>What you get</h2>
+  <div class="inc">
+    <div><b>The POV Deck Builder</b><p>One file that runs in your browser. No install, no login, no subscription. Your customer data never leaves your machine.</p></div>
+    <div><b>Two AI prompts</b><p>One fills the kickoff deck from your brief. One turns your results into the readout. Both work in Claude, ChatGPT, Gemini and Copilot.</p></div>
+    <div><b>Real PowerPoint output</b><p>Native, editable slides, tables and charts. Opens in PowerPoint, Keynote and Google Slides, in your company's colour.</p></div>
+    <div><b>Example decks and a guide</b><p>A complete kickoff and readout to copy from, plus a two-page quick start.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Questions</h2>
+  <dl class="faq">
+    <dt>Does it work for my product?</dt><dd>Yes. Nothing in the kit is tied to a vendor or an industry. You enter what you sell, and the AI does the matching.</dd>
+    <dt>Do I need a paid AI account?</dt><dd>No. The free tiers of the major AI assistants work. The builder itself needs no AI at all if you'd rather type.</dd>
+    <dt>Is my customer's data safe?</dt><dd>The builder sends nothing anywhere. Your work is saved in your browser and in project files you control. What you paste into your AI follows your company's AI policy.</dd>
+    <dt>Can I change the design?</dt><dd>Pick your accent colour in the builder. After download, every slide is ordinary, editable PowerPoint.</dd>
+    <dt>Can I share it with my team?</dt><dd>Share the decks you make with anyone. The builder is licensed to one person; team licences are coming.</dd>
+  </dl>
+</div></section>
+
+<section id="buy"><div class="wrap">
+  <div class="buy">
+    <h2>Run your next POV on 10 slides.</h2>
+    <p>The builder, both prompts, example decks and the quick-start guide. $49, one time.</p>
+    <!-- LAUNCH: replace this button's href with the checkout link and its text with "Buy now · $49" -->
+    <a class="btn" href="index.html#signup">Get launch-day access</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">© 2026 SE Engineer Shorts · An independent project, not affiliated with or endorsed by any employer or vendor. Example companies are fictional.</div></footer>
+</body>
+</html>
