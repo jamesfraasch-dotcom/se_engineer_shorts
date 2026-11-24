@@ -184,7 +184,7 @@ pre#output{margin:0;padding:14px;border-top:1px solid rgba(255,255,255,.08);font
     <p class="lead">Three passes, in this order, with sources for everything.</p>
     <div class="three">
       <div><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="9" width="26" height="18" rx="2"/><path d="M14 33h12M20 27v6M13 16h8M13 21h14"/></svg><b>Learns your product</b><span>Finds the top five use cases from your company's own pages and customer stories.</span></div>
-      <div><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="18" cy="18" r="10"/><path d="M26 26l8 8M14 18h8M18 14v8"/></svg><b>Researches the customer</b><span>Priorities, recent news, technology and people, each with a dated source.</span></div>
+      <div><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="18" cy="18" r="10"/><path d="M26 26l8 8M14 18h8M18 14v8"/></svg><b>Researches the customer</b><span>Priorities, recent news, technology, and the people who own the problem, found through LinkedIn and public sources. Everything gets a dated source.</span></div>
       <div><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="15" cy="20" r="9"/><circle cx="25" cy="20" r="9"/><path d="M20 15.5v9"/></svg><b>Matches the two</b><span>Keeps only the use cases the evidence supports and builds the brief around them.</span></div>
     </div>
   </div>
@@ -281,12 +281,11 @@ const SECTIONS = [
   {g:'About the customer', id:'news',       t:'Recent news and triggers', h:'Dated events and why each one matters', d:[1,1]},
   {g:'About the customer', id:'priorities', t:'Strategic priorities',     h:'What leadership has said they are trying to do', d:[1,1]},
   {g:'About the customer', id:'tech',       t:'Technology environment',   h:'What they run, with the evidence for each item', d:[0,1]},
-  {g:'About the customer', id:'leadership', t:'Key people',               h:'Public roles and what each has said recently', d:[0,1]},
+  {g:'About the customer', id:'players',    t:'Key players',              h:'Leaders and the managers who own the problem, from LinkedIn and public sources. Internal adds buying roles and how to approach each one.', d:[0,1]},
   {g:'Where you fit',      id:'beforeafter',t:'Today versus with your product', h:'Matched scenarios using their real systems and sites', d:[1,0]},
   {g:'Where you fit',      id:'proof',      t:'Proof points',             h:'Published results the AI can cite, never invented', d:[1,1]},
+  {g:'Where you fit',      id:'discovery',  t:'Intro call questions',     ti:'Intro call plan', tc:'Questions to explore together', h:'Customer-facing: a short, friendly list. Internal: a call plan in call order, tagged by MEDDPICC.', d:[1,1]},
   {g:'Where you fit',      id:'nextsteps',  t:'Next steps',               h:'A short path forward with timeframes', d:[1,1]},
-  {g:'For your eyes only', id:'discovery',  t:'Discovery questions',      h:'Questions tied to what the research turned up', d:[0,1], internal:true},
-  {g:'For your eyes only', id:'stakeholders',t:'Stakeholder map',         h:'Who likely decides, influences, blocks and champions', d:[0,1], internal:true},
   {g:'For your eyes only', id:'competition',t:'Competitive landscape',    h:'Incumbents, alternatives, where you win and lose', d:[0,1], internal:true},
   {g:'For your eyes only', id:'objections', t:'Likely objections',        h:'What they will push back on and how to answer', d:[0,1], internal:true},
   {g:'For your eyes only', id:'qualification',t:'MEDDPICC scorecard',     h:'What you know and what is missing', d:[0,1], internal:true},
@@ -351,17 +350,29 @@ function build(){
     news: 'Recent news and triggers. ' + n[1] + ' or more items from the last 6 months: leadership changes, launches, incidents, funding, acquisitions, contracts, regulatory actions. Each has the exact date, the named source, a specific headline, a one or two sentence summary, and ' + (I ? 'a "How to use this" note giving the sales angle and the use case it supports.' : 'a "Why it matters" note of 25 words or more tying it to one of the matched use cases.') + cls('.cols of .card with .meta for date and source, and .why for the note'),
     priorities: 'Strategic priorities. The 3 to 5 goals ' + C + ' leadership has stated publicly, in their own terms, each with where and when it was said.' + cls('.cols of .card'),
     tech: 'Technology environment. A table of what ' + C + ' runs: Area, What they use, Evidence' + (I ? ', Confidence. Tag each row Confirmed, Likely or Unknown.' : '. Include only items you can confirm from a public source.') + ' Good evidence: job postings, vendor case studies, press releases, public documentation.' + (styled && I ? ' Use .tag.confirmed, .tag.likely, .tag.unknown.' : ''),
-    leadership: 'Key people. A table: Name, Role, Public focus or recent statement' + (I ? ', Likely part in a buying decision.' : '.') + ' Public professional information only.',
+    players: I
+      ? 'Key players. The people at ' + C + ' most likely to shape a decision on the matched use cases: ' + ({short:'4 to 5', standard:'6 to 8', deep:'10 to 12'}[s.length] || '6 to 8') + ' people. Cover the executive sponsor level, but put more effort into the directors and managers below them who own each matched problem day to day, because they feel the pain first and often champion the purchase. ' +
+        'How to find them: for each matched use case, work out the titles that usually own it, then search the web with queries such as site:linkedin.com/in "' + C + '" plus a title keyword, and site:linkedin.com/posts "' + C + '" plus a topic. You will see public LinkedIn profiles and posts through search results, not by logging in. Confirm each person through a second source where you can: ' + C + '\'s own site, press releases, conference talks, podcasts or news. Check that they still work there. ' +
+        'A table with one row per person: Name; Title and time in role; Career history (previous employers, and flag any that used ' + S + '\'s product or a competing one); Recent posts or talks (topic and date, last 6 months); Likely role in this decision (economic buyer, champion, technical evaluator, user or blocker); What they care about; How to approach them; Confidence. ' +
+        'Flag anyone in the role under 12 months as a trigger, since new leaders often review tools and vendors. Never guess a name to fill a role: if you cannot find the person, add a row with the title to look for and mark it Unknown.' + (styled ? ' Use the .tag classes for confidence.' : '')
+      : 'Key players. 3 to 5 leaders at ' + C + ' whose public priorities connect to the matched use cases, found through LinkedIn (via site:linkedin.com searches) and ' + C + '\'s own sources. A table: Name, Title, What they have said publicly and when. Only include what they have said in public. Leave out career history, buying roles and anything about how to approach them.',
     beforeafter: 'Today versus with ' + S + '. One matched pair per matched use case, written for an executive reader and naming ' + C + '\'s real applications, sites or programs. End with one closing line.' + cls('.ba with a .before column headed "Today" and an .after column headed "With ' + S + '", then .closing'),
     proof: 'Proof points. Up to 3 published results for the matched use cases, taken from ' + S + '\'s own pages, analyst studies or named customer stories. Each shows the figure, what it measures, one sentence on what it would mean for ' + C + ', and the citation. If you cannot cite any, leave this section out.' + cls('.proof of .card, each with .stat and .cite'),
     nextsteps: I ? 'Next steps. 3 or 4 actions for the account team in order, each with an owner role and a timeframe.' + cls('.steps of .step with .when')
                  : 'Next steps. 3 or 4 steps. The first is a working session or demonstration built around the strongest matched use case. Each has a timeframe.' + cls('.steps of .step with .when'),
-    discovery: 'Discovery questions. ' + (s.length==='short' ? '6' : '8 to 12') + ' questions grouped by matched use case. Each is tied to a specific finding and says what a strong answer would tell us.',
-    stakeholders: 'Stakeholder map. A table: Person or role, Likely stake in this decision, What they care about, How to approach them, Confidence. Name real people only where a public source supports it.' + (styled ? ' Use the .tag classes for confidence.' : ''),
+    discovery: I
+      ? 'Intro call plan for a first conversation with ' + C + '. Open with a one-line goal for the call and a three-part agenda: their world, where ' + S + ' might fit, agree a next step. ' +
+        'Then ' + ({short:'6 to 8', standard:'10 to 12', deep:'14 to 16'}[s.length] || '10 to 12') + ' questions in the order the call would run, across five stages: 1. Their world and role. 2. Priorities and what is driving them now. 3. How it is done today. 4. Impact and cost of leaving it as is. 5. How they decide, and the next step. ' +
+        'Every question is open-ended and short enough to say out loud. Each one rests on something specific: a finding from the research or a named key player. Add a short "Because" note citing it. Tag each question with the MEDDPICC element it uncovers: Metrics, Economic buyer, Decision criteria, Decision process, Paper process, Identify pain, Champion or Competition. Add what a strong answer sounds like and what a red flag sounds like. ' +
+        'Do not ask what the research already answers; turn it into a confirming question instead, e.g. "We read that you are consolidating data centers this year. Is that still the focus?" Where a question is best put to a particular key player, name them. Mark the 3 must-ask questions. Finish with 2 closing questions that secure the next meeting.' +
+        cls('a table with columns Stage, Question, Because, MEDDPICC, Listen for, and mark must-ask questions with a .tag.confirmed reading "Must ask"')
+      : 'Questions to explore together. 5 to 7 open questions for our first conversation, in the order a conversation would naturally flow: your goals, how things work today, what gets in the way, what success would look like, how you would like to proceed. ' +
+        'Each question is warm and specific to ' + C + ', and points to something public, such as a stated priority or a recent announcement. Under each, one line on why we are asking. No framework labels, no questions about budget or who signs, nothing that reads like qualification.' +
+        cls('.cols of .card, each with an .eyebrow for the topic, the question as an h3, and the reason as a paragraph'),
     competition: 'Competitive landscape. Incumbent tools, likely alternatives, and the options of building in-house or doing nothing. For each: evidence it is in play, where ' + S + ' is stronger, where it is weaker, and one trap to set or avoid.',
     objections: 'Likely objections. 4 to 6 objections this customer is likely to raise, each with a response and the proof that backs it.',
     qualification: 'MEDDPICC scorecard. One row per element: what we know and the source, what is missing, and the question that closes the gap.',
-    talktrack: 'Opening talk track. A 30-second opener for a first call and an outreach email under 90 words, both built on the strongest trigger and the top matched use case.'
+    talktrack: 'Opening talk track. A 30-second opener for a first call and an outreach email under 90 words, both built on the strongest trigger and the top matched use case, and aimed at the best-placed key player.'
   };
 
   const matchHow = 'Use case match. This is the core of the brief. A table with one row per matched use case, strongest first: Use case, What we found at ' + C + ' (with source), What ' + S + ' does about it, Outcome.' +
@@ -371,16 +382,17 @@ function build(){
   const sections = [];
   sections.push({title:'Header', how:(I && styled ? 'Start with .internal-banner reading "INTERNAL - NOT FOR DISTRIBUTION". ' : '') + 'Title is ' + C + '. Above it a small line naming ' + S + ' and the product. Below it a one-sentence tagline specific to ' + C + '\'s mission, not a slogan. Then the date and 3 to 5 sourced headline facts about ' + C + ' such as headcount, sites, revenue or people served.' + cls('.hero containing .wrap, .eyebrow, h1, .tagline, .chips of .chip, and .kpis of .kpi')});
   sections.push({title:'Summary', how:'Open with the single most important finding as one specific sentence of 20 words or more. Follow with 80 to 120 words grounded in the research' + (must ? ', making the required value the centre of it' : '') + '. Then three short blocks: ' + (I ? '"Why now", "Our strongest use case", "Biggest unknown".' : '"The situation", "Where ' + S + ' fits", "What changes".') + cls('.summary with p.lead, then .cols of three .card')});
+  const title = x => (I ? x.ti : x.tc) || x.t;
   const about = SECTIONS.filter(x => x.g === 'About the customer' && secOn(x));
-  about.forEach(x => sections.push({title:x.t, named:true, how:HOW[x.id]}));
+  about.forEach(x => sections.push({title:title(x), named:true, how:HOW[x.id]}));
   sections.push({title:'Use case match', named:true, how:matchHow});
-  SECTIONS.filter(x => x.g !== 'About the customer' && secOn(x)).forEach(x => sections.push({title:x.t, named:true, how:HOW[x.id]}));
+  SECTIONS.filter(x => x.g !== 'About the customer' && secOn(x)).forEach(x => sections.push({title:title(x), named:true, how:HOW[x.id]}));
   sections.push({title:'Sources', how:'A numbered list of every source used, for both ' + S + ' and ' + C + ': publisher, title, date, URL.' + (I ? ' Then a short list of what you looked for and could not find.' : '') + cls('footer inside .wrap')});
 
   const steps = [
     'Research the seller first. The seller is ' + R + ' at ' + S + '. From that, work out which ' + S + ' product or product line they sell. If ' + S + ' sells several and the role does not settle it, choose the best fit and say which you chose in your first line. Then read ' + S + '\'s product pages, documentation, customer stories and analyst coverage, and write down the top 5 use cases for that product: the problem each solves, who usually owns that problem, the outcome claimed, and any published proof with its source.',
-    'Research ' + C + ' next. Cover what each section below needs, with extra weight on the last 6 months. Look at their site, press releases, leadership statements, annual or budget reports, job postings and news. If the name matches more than one organization, pick the one that fits and say which.',
-    'Match the two. For each of the 5 use cases, look for evidence at ' + C + ' that the problem exists or matters: a stated priority, a recent event, a tool they run, a role they are hiring. Keep the ' + n[2] + ' or so use cases with the strongest evidence and rank them. Drop any with none. The brief is built around these matches.',
+    'Research ' + C + ' next. Cover what each section below needs, with extra weight on the last 6 months. Look at their site, press releases, leadership statements, annual or budget reports, job postings and news. For people, search LinkedIn through web search (site:linkedin.com/in and site:linkedin.com/posts with ' + C + '\'s name and a title or topic). If the name matches more than one organization, pick the one that fits and say which.',
+    'Match the two. For each of the 5 use cases, look for evidence at ' + C + ' that the problem exists or matters: a stated priority, a recent event, a tool they run, a role they are hiring. Keep the ' + n[2] + ' or so use cases with the strongest evidence and rank them. Drop any with none. For each match, note who at ' + C + ' most likely owns that problem. The brief is built around these matches.',
     must ? 'The seller requires this value to be shown: "' + must + '". Make it the lead of the summary and the first row of the use case match, and find the evidence at ' + C + ' that supports it.' + (I ? ' If the research does not support it, say so plainly and suggest what would.' : ' If the evidence is thin, present it as what organizations in their position commonly face, without overstating.') : null,
     'If you cannot search the web in this session, say so in your first line, then work from what you know and the inputs, and list what needs verifying.',
     'Write the sections below, in order, following the rules. Then format and deliver as described under Format.'
@@ -392,7 +404,8 @@ function build(){
     'Describe only what ' + S + '\'s product publicly does. Do not stretch a use case to fit.',
     'No placeholder text and no square brackets in the output. Every sentence is specific to ' + C + '.',
     'Use ' + C + '\'s own names for its programs, systems and teams. Avoid vendor jargon.',
-    'People: public professional information only. Nothing personal.'
+    'People: public professional information only. Nothing personal, and no phone numbers, personal email addresses or home locations. List each person once, in Key players, and refer to them by name elsewhere.',
+    'LinkedIn profiles and posts count as sources: cite the URL and the date you saw it. If LinkedIn results do not come up in your search, say so and use other public sources.'
   ];
   if(I){
     rules.push('This is an internal working document. Be blunt about gaps, risks and weak matches.');
