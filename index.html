@@ -149,12 +149,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <p>One short email when a new free SE tool ships. No spam, unsubscribe any time.</p>
       </div>
       <div>
-        <!-- Kit form: replace KIT_FORM_ID with the number from your Kit form's embed code -->
-        <form action="https://app.kit.com/forms/KIT_FORM_ID/subscriptions" method="post">
-          <label for="email" class="sr" style="position:absolute;left:-9999px">Email</label>
-          <input id="email" name="email_address" type="email" placeholder="you@company.com" required>
+        <!-- FormSubmit relays signups to email. After activation, swap the address for the alias FormSubmit sends you. -->
+        <form id="signup-form" action="https://formsubmit.co/james.fraasch@gmail.com" method="POST">
+          <label for="email" style="position:absolute;left:-9999px">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@company.com" required>
+          <input type="hidden" name="_subject" value="New SE Engineer Shorts signup">
+          <input type="hidden" name="_next" value="https://jamesfraasch-dotcom.github.io/se_engineer_shorts/?subscribed=1#signup">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
           <button class="btn" type="submit">Notify me</button>
         </form>
+        <p id="signup-thanks" hidden style="font-weight:700;color:#7DE3D8">You're on the list. Thanks!</p>
         <small>Use a personal address if your work email filters newsletters.</small>
       </div>
     </div>
@@ -168,5 +174,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   </div>
 </footer>
 
+<script>
+if (/[?&]subscribed=1/.test(location.search)) { document.getElementById('signup-form').hidden = true; document.getElementById('signup-thanks').hidden = false; }
+</script>
 </body>
 </html>
